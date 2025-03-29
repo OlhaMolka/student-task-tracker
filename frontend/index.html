@@ -3,21 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Трекер завдань</title>
+    <title>Трекер завдань студентів</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>Трекер завдань</h1>
+        <h1>Трекер завдань студентів</h1>
     </header>
     <main>
-        <section>
+        <section id="task-list">
             <h2>Список завдань</h2>
-            <ul id="task-list">
-                <li>Завдання 1</li>
-                <li>Завдання 2</li>
+            <ul id="tasks">
+                <!-- Сюди будуть додаватися завдання -->
             </ul>
         </section>
+        <section id="add-task">
+            <h2>Додати завдання</h2>
+            <input type="text" id="task-title" placeholder="Назва завдання">
+            <textarea id="task-desc" placeholder="Опис завдання"></textarea>
+            <button onclick="addTask()">Додати</button>
+        </section>
     </main>
+    <script src="app.js"></script>
 </body>
 </html>

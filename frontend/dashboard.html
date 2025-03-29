@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <title>Список завдань</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <h1>Список завдань</h1>
+  <button onclick="logout()">Вийти</button>
+  <ul id="tasks"></ul>
+
+<!-- Для студента: кнопка/селект зміни статусу -->
+<div id="student-panel" style="display: none;">
+  <h2>Змінити статус</h2>
+  <select id="new-status">
+    <option value="на перевірці">на перевірці</option>
+    <option value="виконано">виконано</option>
+    <option value="зараховано">зараховано</option>
+    <option value="не виконано">не виконано</option>
+  </select>
+  <input type="text" id="task-id" placeholder="ID завдання" />
+  <button onclick="changeStatus()">Змінити статус</button>
+</div>
+
+<div id="admin-panel" style="display: none;">
+  <h2>Додати завдання (тільки для admin)</h2>
+  <input type="text" id="task-title" placeholder="Назва" />
+  <input type="text" id="task-desc" placeholder="Опис" />
+  <button onclick="addTask()">Додати</button>
+</div>
+  <div id="admin-panel" style="display: none;">
+    <h2>Додати завдання (тільки для admin)</h2>
+    <input type="text" id="task-title" placeholder="Назва" />
+    <input type="text" id="task-desc" placeholder="Опис" />
+    <button onclick="addTask()">Додати</button>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>
