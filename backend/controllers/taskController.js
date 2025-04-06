@@ -1,5 +1,6 @@
 const Task = require('../models/Task');
 
+// Отримати всі завдання
 exports.getTasks = async (req, res) => {
     try {
         const tasks = await Task.find();
@@ -9,6 +10,7 @@ exports.getTasks = async (req, res) => {
     }
 };
 
+// Створити нове завдання
 exports.createTask = async (req, res) => {
     try {
         const { title, description, deadline } = req.body;
@@ -25,8 +27,13 @@ exports.createTask = async (req, res) => {
     }
 };
 
+// 🔐 Оновити завдання (тільки admin)
 exports.updateTask = async (req, res) => {
     try {
+        if (req.user.role !== 'admin') {
+            return res.status(403).json({ msg: "Доступ заборонено: тільки для адміністратора" });
+        }
+
         const updatedTask = await Task.findByIdAndUpdate(req.params.id, req.body, {
             new: true,
             runValidators: true,
@@ -42,8 +49,13 @@ exports.updateTask = async (req, res) => {
     }
 };
 
+// 🔐 Видалити завдання (тільки admin)
 exports.deleteTask = async (req, res) => {
     try {
+        if (req.user.role !== 'admin') {
+            return res.status(403).json({ msg: "Доступ заборонено: тільки для адміністратора" });
+        }
+
         const deletedTask = await Task.findByIdAndDelete(req.params.id);
 
         if (!deletedTask) {
