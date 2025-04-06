@@ -1,19 +1,17 @@
 const jwt = require("jsonwebtoken");
 
-module.exports = (req, res, next) => {
-  const authHeader = req.header("Authorization");
+module.exports = function (req, res, next) {
+  const token = req.header("Authorization")?.split(" ")[1];
 
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+  if (!token) {
     return res.status(401).json({ msg: "Немає токена, доступ заборонено" });
   }
 
-  const token = authHeader.split(" ")[1];
-
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; // { id, role }
+    req.user = decoded; // додаємо user.id і role до req
     next();
   } catch (err) {
-    return res.status(401).json({ msg: "Недійсний токен" });
+    res.status(401).json({ msg: "Недійсний токен" });
   }
 };

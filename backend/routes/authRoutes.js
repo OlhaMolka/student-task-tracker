@@ -1,8 +1,11 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
+const { register, login } = require("../controllers/authController");
 
-router.get('/', (req, res) => {
-    res.send('Auth API works');
-});
+// POST /api/auth/register
+router.post("/register", register);
 
-module.exports = router; // 🔴 ВАЖЛИВО!
+// POST /api/auth/login
+router.post("/login", login);
+
+module.exports = router;
