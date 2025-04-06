@@ -1,14 +1,18 @@
 const express = require('express');
 const router = express.Router();
+const taskController = require('../controllers/taskController');
+const authMiddleware = require('../middleware/authMiddleware');
 
-const auth = require('../middleware/authMiddleware');
-const isAdmin = require('../middleware/isAdmin');
-const { getTasks, createTask } = require('../controllers/taskController');
+// Отримати всі завдання
+router.get('/', taskController.getTasks);
 
-// 🔐 Отримати список завдань (доступно для всіх авторизованих користувачів)
-router.get('/', auth, getTasks);
+// Створити нове завдання (авторизація)
+router.post('/', authMiddleware, taskController.createTask);
 
-// 🛠️ Створити нове завдання (доступно лише для admin)
-router.post('/', auth, isAdmin, createTask);
+// Редагувати завдання (авторизація)
+router.put('/:id', authMiddleware, taskController.updateTask);
+
+// Видалити завдання (авторизація)
+router.delete('/:id', authMiddleware, taskController.deleteTask);
 
 module.exports = router;

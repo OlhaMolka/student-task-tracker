@@ -6,6 +6,7 @@ const cors = require("cors");
 const authRoutes = require("./routes/authRoutes");
 const taskRoutes = require("./routes/taskRoutes");
 const statusRoutes = require("./routes/statusRoutes");
+const userRoutes = require("./routes/userRoutes"); // ✅ Додали новий маршрут
 
 const app = express();
 
@@ -18,13 +19,14 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB Connected"))
   .catch((err) => {
     console.error("❌ MongoDB Connection Error:", err.message);
-    process.exit(1); // якщо не підключено до БД — сервер не стартує
+    process.exit(1);
   });
 
 // 🔗 Роутинг
-app.use("/api/auth", authRoutes);             // /api/auth/register, /api/auth/login
-app.use("/api/tasks", taskRoutes);            // /api/tasks, /api/tasks/:id/statuses
-app.use("/api/task-statuses", statusRoutes);  // /api/task-statuses (оновлення статусу студентом)
+app.use("/api/auth", authRoutes);
+app.use("/api/tasks", taskRoutes);
+app.use("/api/task-statuses", statusRoutes);
+app.use("/api/users", userRoutes); // ✅ Тут підключено userRoutes
 
 // 🌐 Health check
 app.get("/", (req, res) => {
