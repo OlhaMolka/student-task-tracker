@@ -13,7 +13,7 @@
         @delete-task="deleteTask"
       />
       <div v-else-if="isFetching" class="p-4 text-gray-500">Завантаження...</div>
-      <div v-else-if="error" class="p-4 text-red-500">Помилка: {{ tasks.error.message }}</div>
+      <div v-else-if="error" class="p-4 text-red-500">Помилка: {{ error }}</div>
       <div v-else class="p-4 text-gray-500">Немає завдань</div>
   
       <Modal :show="isModalOpen" @close="closeModal">
