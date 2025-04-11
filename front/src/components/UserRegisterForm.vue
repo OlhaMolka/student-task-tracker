@@ -1,6 +1,5 @@
 <template>
-    <form @submit.prevent="emit('register', {data: { name: name.value, email: email.value, password: password.value}})" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-      <h2 class="text-2xl font-bold mb-6 text-center">Реєстрація</h2>
+    <form @submit.prevent="emit('register')" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
       <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
           Ім'я
@@ -9,7 +8,7 @@
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="name"
           type="text"
-          v-model="name"
+          v-model="new_user.name"
           placeholder="Ваше ім'я"
           required
         />
@@ -22,7 +21,7 @@
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="email"
           type="email"
-          v-model="email"
+          v-model="new_user.email"
           placeholder="Ваш email"
           required
         />
@@ -35,7 +34,7 @@
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="password"
           type="password"
-          v-model="password"
+          v-model="new_user.password"
           placeholder="Ваш пароль"
           required
         />
@@ -49,15 +48,15 @@
         </button>
       </div>
     </form>
-    {{ name }} {{ email }} {{ password }}
   </template>
   
   <script setup>
   import { ref } from 'vue';
   
-  const name = ref('');
-  const email = ref('');
-  const password = ref('');
+  const new_user = defineModel('new_user');
+  // const name = ref('');
+  // const email = ref('');
+  // const password = ref('');
   
   const emit = defineEmits(['register']);
   

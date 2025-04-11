@@ -9,6 +9,7 @@ const statusRoutes = require("./routes/statusRoutes");
 const userRoutes = require("./routes/userRoutes"); // ✅ Додали новий маршрут
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
+
 const options = require('./swagger.config');
 const swaggerDocs = swaggerJsdoc(options);
 const app = express();
