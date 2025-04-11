@@ -34,17 +34,17 @@ const new_user = ref({
 });
 const API_URL = import.meta.env.VITE_APP_API_URL;
 const {execute, error} = useFetch(`${API_URL}/auth/register`, {
-    immediate: false
-    }).post(new_user).json();
+    method: 'POST',
+    immediate: false,
+    afterFetch(ctx) {
+    if (ctx.data.title === 'Реєстрація успішна')
+      router.push('/login');
+    else {
+      alert('Помилка реєстрації: ' + ctx.data.message + ctx.error);
+    }
+    return ctx
+    }}).post(new_user).json();
   const register = () => {
     execute();
-    // if (error) {
-    //   alert('Помилка реєстрації: ' + error.value);
-    // } else {  
-    //   alert('Реєстрація успішна!');
-    //   router.push('/login');
-    // }
-    console.log('error', error.value);
-
   };
   </script>
