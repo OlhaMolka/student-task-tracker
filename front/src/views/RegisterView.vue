@@ -10,46 +10,66 @@
         <p class="text-center text-gray-600 text-sm">
           <router-link to="/" class="text-blue-500 hover:text-blue-700">На головну</router-link>
         </p>
-        <p v-if="error" class="text-center text-red-600 text-sm">
-          Помилка: {{ error }}, {{ data }}.
-        </p>
-        
       </div>
     </div>
+    <Teleport to="body">
+    <modal :show="showModal" @close="closeModal">
+      <template #header>
+        <h3>{{ modal_text.title }}</h3>
+      </template>
+      <template #body>
+        <h3>{{ modal_text.message }}</h3>
+      </template>
+    </modal>
+  </Teleport>
   </template>
-  
   <script setup>
 import { useFetch } from '@vueuse/core';
 import UserRegisterForm from '../components/UserRegisterForm.vue';
 import { ref } from 'vue'
 import { useRouter } from 'vue-router';
+import Modal from '../components/UI/ModalInfo.vue';
+import { Teleport } from 'vue';
+
 const router = useRouter();
 const new_user = ref({
   name: '',
   email: '',
   password: ''
 });
+const showModal = ref(false)
+const modal_text = ref({
+  title: '',
+  message: ''
+}); 
 
 const API_URL = import.meta.env.VITE_APP_API_URL;
-const {execute, error, statusCode, data, onFetchError} = useFetch(`${API_URL}/auth/register`, {immediate:false, 
+const {execute, error, statusCode, data} = useFetch(`${API_URL}/auth/register`, {immediate:false, 
   updateDataOnError: true
 }
 ).post(new_user.value).json();
   
   async function register() {
   
-    await execute(); // Виклик методів у правильному порядку
+    await execute();
 
     if (statusCode.value === 201) {
-      router.push('/login');
-    } else if (statusCode.value === 400 && data.value && data.value.error) {
-      // errorMessage.value = data.value.error;
-      console.log("1", data.value, error.value, statusCode.value);
-    } else {
-      // errorMessage.value = 'Помилка реєстрації';
-      console.log("2", data.value, error.value, statusCode.value);
+     modal_text.value.title = 'Успішно';
+     modal_text.value.message = 'Реєстрація пройшла успішно';
+     showModal.value = true;
+    } else if (data.value && data.value.msg) {
+      modal_text.value.title = 'Помилка';
+      modal_text.value.message = data.value.msg;
+      showModal.value = true;
     }
     
+    // router.push('/login');
+}
+const closeModal = () => {
+  showModal.value = false; 
+  if(statusCode.value === 201) {
+    router.push('/login');
+  }
 }
 
   </script>
