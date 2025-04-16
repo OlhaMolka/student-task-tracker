@@ -51,13 +51,8 @@
   </template>
   
   <script setup>
-  import { ref } from 'vue';
   
   const new_user = defineModel('new_user');
-  // const name = ref('');
-  // const email = ref('');
-  // const password = ref('');
-  
   const emit = defineEmits(['register']);
   
   </script>

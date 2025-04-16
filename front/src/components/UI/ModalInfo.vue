@@ -1,8 +1,10 @@
 <template>
+   <Transition name="modal-fade">
     <div v-if="show" class="fixed z-10 inset-0 " aria-labelledby="modal-title" role="dialog" aria-modal="true">
       <div class="flex justify-center pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <div class="fixed inset-0 transition-opacity backdrop-blur-xs" aria-hidden="true" @click="close"></div>
-        <!-- <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span> -->
+        <div class="fixed inset-0 transition-opacity backdrop-blur-xs" aria-hidden="false" @click="close">
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <Transition name="modal-slide">
         <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
           <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
             <div class="sm:flex sm:items-start">
@@ -27,8 +29,11 @@
             </button>
           </div>
         </div>
-      </div>
+      </Transition>
+    </div>  
     </div>
+    </div>
+  </Transition>
   </template>
   
   <script setup>
@@ -36,4 +41,33 @@
     show: Boolean
   })
   </script>
+ <style scoped>
+ /* Анімація згасання фону */
+ .modal-fade-enter-active,
+ .modal-fade-leave-active {
+  /* opacity: 0; */
+   transition: opacity 0.8s ease;
+   transition: blur 0.4s ease;
+ }
  
+ .modal-fade-enter-from,
+ .modal-fade-leave-to {
+  opacity: 0;
+ }
+ 
+ /* Анімація ковзання модального вікна */
+ .modal-slide-enter-active,
+ .modal-slide-leave-active {
+   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+ }
+ 
+ .modal-slide-enter-from {
+   opacity: 0;
+   transform: translateY(30px);
+ }
+ 
+ .modal-slide-leave-to {
+   opacity: 0;
+   transform: translateY(-30px);
+ }
+ </style>

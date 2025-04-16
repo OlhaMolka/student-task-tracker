@@ -29,7 +29,6 @@ import UserRegisterForm from '../components/UserRegisterForm.vue';
 import { ref } from 'vue'
 import { useRouter } from 'vue-router';
 import Modal from '../components/UI/ModalInfo.vue';
-import { Teleport } from 'vue';
 
 const router = useRouter();
 const new_user = ref({
@@ -63,7 +62,6 @@ const {execute, error, statusCode, data} = useFetch(`${API_URL}/auth/register`, 
       showModal.value = true;
     }
     
-    // router.push('/login');
 }
 const closeModal = () => {
   showModal.value = false; 
