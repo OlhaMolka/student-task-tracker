@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  app:
+    build: .  # Шлях до каталогу з вашим Dockerfile
+    ports:
+      - "5000:5000"  # Прокидання порту 5000 з контейнера на хост
+    environment:
+      - PORT=5000
+      - MONGO_URI=mongodb+srv://profi_user:ifJVVWw19OZuoQJS@profi.heqvn.mongodb.net/
+      - JWT_SECRET=Varenyk # Замініть на URI вашої MongoDB
+  
