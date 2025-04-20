@@ -9,6 +9,7 @@ module.exports = {
       servers: [
         {
           url: "http://localhost:5000",
+          url: "http://fcos.lan:5000",
         },
       ],
       components: {
