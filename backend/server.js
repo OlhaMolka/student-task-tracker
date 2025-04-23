@@ -31,7 +31,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/tasks", taskRoutes);
 app.use("/api/task-statuses", statusRoutes);
 app.use("/api/users", userRoutes); // ✅ Тут підключено userRoutes
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // 🌐 Health check
 app.get("/", (req, res) => {
