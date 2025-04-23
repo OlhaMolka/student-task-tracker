@@ -8,7 +8,8 @@ module.exports = {
       },
       servers: [
         {
-          url: "https://tasks.profi-it.com.ua:5000/api",
+          url: "http://localhost:5000",
+          url: "https://tasks.profi-it.com.ua/api/",
         },
       ],
       components: {
