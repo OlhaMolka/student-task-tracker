@@ -9,7 +9,8 @@ module.exports = {
       servers: [
         {
           url: "http://localhost:5000",
-          url: "https://tasks.profi-it.com.ua/api/",
+          url: "http://coreos-vm.lan:5000",
+          url: "https://tasks.profi-it.com.ua"
         },
       ],
       components: {
