@@ -8,10 +8,11 @@ const taskRoutes = require("./routes/taskRoutes");
 const statusRoutes = require("./routes/statusRoutes");
 const userRoutes = require("./routes/userRoutes"); // ✅ Додали новий маршрут
 const swaggerUi = require('swagger-ui-express');
-const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerDocument = require('./swagger.json');
+// const swaggerJsdoc = require('swagger-jsdoc');
 
-const options = require('./swagger.config');
-const swaggerDocs = swaggerJsdoc(options);
+// const options = require('./swagger.config');
+// const swaggerDocs = swaggerJsdoc(options);
 const app = express();
 
 // 🔧 Middleware
@@ -31,10 +32,10 @@ app.use("/api/auth", authRoutes);
 app.use("/api/tasks", taskRoutes);
 app.use("/api/task-statuses", statusRoutes);
 app.use("/api/users", userRoutes); // ✅ Тут підключено userRoutes
-app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // 🌐 Health check
-app.get("/", (req, res) => {
+app.get("/test", (req, res) => {
   res.send("✅ Сервер працює! 🚀");
 });
 

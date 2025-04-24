@@ -8,8 +8,6 @@ module.exports = {
       },
       servers: [
         {
-          url: "http://localhost:5000",
-          url: "http://coreos-vm.lan:5000",
           url: "https://tasks.profi-it.com.ua"
         },
       ],

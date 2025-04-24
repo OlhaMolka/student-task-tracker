@@ -8,5 +8,5 @@ services:
     environment:
       - PORT=5000
       - MONGO_URI=mongodb+srv://profi_user:ifJVVWw19OZuoQJS@profi.heqvn.mongodb.net/
-      - JWT_SECRET=Varenyk # Замініть на URI вашої MongoDB
+      - JWT_SECRET=Varenyk 
   
