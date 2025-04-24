@@ -5,10 +5,10 @@
     "title": "REST API",
     "description": "tasks "
   },
-  "host": "localhost:5000",
-  "basePath": "/",
+  "host": "tasks.profi-it.com.ua",
+  "basePath": "/api/",
   "schemes": [
-    "http"
+    "https"
   ],
   "paths": {
     "/test": {
