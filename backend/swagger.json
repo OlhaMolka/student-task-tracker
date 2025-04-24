@@ -6,7 +6,7 @@
     "description": "tasks "
   },
   "host": "tasks.profi-it.com.ua",
-  "basePath": "/api/",
+  "basePath": "/",
   "schemes": [
     "https"
   ],
