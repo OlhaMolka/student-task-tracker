@@ -19,6 +19,7 @@
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.12.2",
+    "morgan": "^1.10.0",
     "swagger-autogen": "^2.23.7"
   },
   "devDependencies": {

@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const morgan = require('morgan');
 const cors = require("cors");
 
 const authRoutes = require("./routes/authRoutes");
@@ -14,6 +15,7 @@ const swaggerDocument = require('./swagger.json');
 // const options = require('./swagger.config');
 // const swaggerDocs = swaggerJsdoc(options);
 const app = express();
+app.use(morgan('dev'));
 
 // 🔧 Middleware
 app.use(cors({ origin: '*' }));
@@ -38,7 +40,17 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.get("/test", (req, res) => {
   res.send("✅ Сервер працює! 🚀");
 });
+app.use((err, req, res, next) => {
+  console.error('--- UNHANDLED ERROR ---');
+  console.error(err.stack); // Логуємо стек-трейс помилки
+  console.error('Request:', req.method, req.originalUrl);
+  console.error('--- END UNHANDLED ERROR ---');
 
+  // Відправляємо відповідь клієнту (500 Internal Server Error)
+  if (!res.headersSent) { // Перевірка, щоб не намагатися відправити заголовки двічі
+      res.status(500).send('Internal Server Error');
+  }
+});
 // ▶️ Запуск сервера
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
