@@ -1,71 +1,109 @@
 <template>
-    <div class="flex justify-center items-center h-screen bg-gray-100">
-      <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-sm">
-        <h2 class="text-2xl font-bold mb-6 text-center">Вхід</h2>
-        <AuthForm @login="login"  v-model:user="user"/>
-        <p class="text-center text-gray-600 text-sm">
+
+
+  <v-card
+      class="mx-auto pa-6" 
+      max-width="800"
+      width="600"
+      elevation="8" 
+      rounded="lg" 
+    >
+
+      <v-card-title class="text-h4 font-weight-bold text-center">
+        Увійти
+      </v-card-title>
+
+      <v-card-text>
+      
+        <AuthForm @login="login" v-model:user="user"/> 
+      </v-card-text>
+      <v-card-actions class="d-flex justify-center flex-column">
+
+        <p class="text-center text-caption mb-2">
           Не маєте акаунта? 
-          <router-link to="/register" class="text-blue-500 hover:text-blue-700">Зареєструватись</router-link>
+          <router-link to="/register" class="text-primary text-decoration-none">
+            Зареєструватись
+          </router-link>
         </p>
-        <p class="text-center text-gray-600 text-sm">
-          <router-link to="/" class="text-blue-500 hover:text-blue-700">На головну</router-link>
+         <p class="text-center text-caption">
+          <router-link to="/" class="text-primary text-decoration-none">
+            На головну
+          </router-link>
         </p>
-      </div>
-    </div>
-    <Teleport to="body">
-    <modal :show="showModal" @close="closeModal">
-      <template #header>
-        <h3>{{ modal_text.title }}</h3>
-      </template>
-      <template #body>
-        <h3>{{ modal_text.message }}</h3>
-      </template>
-    </modal>
-  </Teleport>
-  </template>
-  <script setup>
+      </v-card-actions>
+    </v-card>
+
+
+  
+  <v-dialog
+    v-model="showModal"
+    persistent
+    max-width="400"
+  >
+    <v-card>
+      <v-card-title class="text-h6">
+        {{ modal_text.title }}
+      </v-card-title>
+
+      <v-card-text>
+        {{ modal_text.message }}
+      </v-card-text>
+
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn
+          color="primary"
+          text
+          @click="closeModal"
+        >
+          Закрити
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+</template>
+
+<script setup>
 import { useFetch } from '@vueuse/core';
-import AuthForm from '../components/AuthForm.vue';
-import { ref } from 'vue'
+import AuthForm from '../components/AuthForm.vue'; 
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import Modal from '../components/UI/ModalInfo.vue';
+
 
 const router = useRouter();
-const user = ref({
+const user = ref({ 
   email: '',
   password: ''
 });
-const showModal = ref(false)
+const showModal = ref(false);
 const modal_text = ref({
   title: '',
   message: ''
-}); 
-const token = ref(null);
+});
+const token = ref(null); 
 
 const API_URL = import.meta.env.VITE_APP_API_URL;
-const {execute, error, statusCode, data} = useFetch(`${API_URL}/auth/login`, {immediate:false, 
+
+const {execute, error, statusCode, data} = useFetch(`${API_URL}/auth/login`, {immediate:false,
   updateDataOnError: true
-}
-).post(user.value).json();
-  
-  async function login() {
-  
-    await execute();
+}).post(user.value).json();
 
-    if (statusCode.value === 200) {
-        token.value = data.value.token;
-        console.log(token.value);
-        router.push('/');
-    } else if (data.value && data.value.msg) {
-      modal_text.value.title = 'Помилка';
-      modal_text.value.message = data.value.msg;
-      showModal.value = true;
-    }
-    
+async function login() { 
+  await execute();
+
+  if (statusCode.value === 200) { 
+    token.value = data.value.token; 
+    console.log(token.value); 
+  
+    router.push('/'); 
+  } else if (data.value && data.value.msg) {
+    modal_text.value.title = 'Помилка';
+    modal_text.value.message = data.value.msg;
+    showModal.value = true;
+  }
 }
+
 const closeModal = () => {
-  showModal.value = false; 
-  
+  showModal.value = false;
 }
-
-  </script>
+</script>

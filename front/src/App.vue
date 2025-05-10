@@ -1,50 +1,74 @@
 <template>
-  <div id="app">
-    <header class="bg-gray-800 text-white py-4">
-      <div class="container mx-auto flex justify-between items-center">
-        <router-link to="/" class="text-2xl font-bold">Task Manager</router-link>
-        <nav class="space-x-4">
-          <router-link to="/" class="hover:text-gray-300">Головна</router-link>
-          <router-link to="/tasks" class="hover:text-gray-300">Завдання</router-link>
-          <router-link to="/login" class="hover:text-gray-300">Увійти</router-link>
-          <router-link to="/register" class="hover:text-gray-300">Зареєструватися</router-link>
-          <router-link v-if="isAdmin" to="/users" class="hover:text-gray-300">Користувачі</router-link>
-        </nav>
+  <v-app>
+    <v-app-bar dark app height="100">
+      <v-container class="fill-height d-flex align-center">
+      <v-icon left size="3rem" >mdi-clipboard-list-outline</v-icon>
+      <v-app-bar-title class="text-h4 font-weight-bold text-white ml-6"> 
+        Task Manager
+      </v-app-bar-title>
+      <v-spacer></v-spacer> 
+      <v-btn text to="/">
+        <v-icon left>mdi-home</v-icon> 
+        Головна
+      </v-btn>
+      <v-btn text to="/tasks">
+        <v-icon left>mdi-calendar-check</v-icon>
+        Завдання
+      </v-btn>
+      <v-btn text to="/login">
+        <v-icon left>mdi-login</v-icon>
+        Увійти
+      </v-btn>
+      <v-btn text to="/register">
+        <v-icon left>mdi-account-plus</v-icon>
+        Зареєструватися
+      </v-btn>
+      <v-btn text to="/users" v-if="isAdmin">
+        <v-icon left>mdi-account-group</v-icon>
+        Користувачі
+      </v-btn>
+
+
+      <v-btn @click="toggleTheme" text>
+        <v-icon left>mdi-theme-light-dark</v-icon> 
+        Змінити тему
+      </v-btn>
+    </v-container>
+    </v-app-bar>
+
+
+    <v-main>
+      <div class="d-flex justify-center align-center fill-height">
+        <router-view />
       </div>
-    </header>
+    </v-main>
 
-    <main class="container mx-auto py-8">
-      <router-view /> </main>
-
-    <footer class="bg-gray-800 text-white py-4 mt-8">
-      <div class="container mx-auto text-center">
+    <v-footer color="primary" dark padless app>
+      <v-container class="text-center white--text py-3">
         &copy; 2025 Task Manager
-      </div>
-    </footer>
-  </div>
+      </v-container>
+    </v-footer>
+  </v-app>
 </template>
 
 <script setup>
+import { ref } from 'vue';
+import { useTheme } from 'vuetify';
 import { computed } from 'vue';
-import { useRoute } from 'vue-router';
 
-// Приклад отримання інформації про користувача (адаптуйте під свою логіку авторизації)
-// Якщо ви використовуєте Vuex або Pinia для управління станом користувача:
-// const store = useStore();
-// const isAdmin = computed(() => store.state.user.role === 'admin');
-
-// Якщо ви використовуєте localStorage або інший спосіб:
+const theme = useTheme();
 const isAdmin = computed(() => localStorage.getItem('userRole') === 'admin');
 
-const route = useRoute();
 
-// Приклад: Автоматичний перехід на головну після входу
-// (Цю логіку краще робити в компоненті LoginView, але для прикладу тут)
-// if (route.name === 'login' && localStorage.getItem('token')) {
-//   router.push('/');
-// }
+function toggleTheme() {
+  const themeNames = Object.keys(theme.themes.value);
+
+  const currentThemeName = theme.global.name.value;
+  const currentThemeIndex = themeNames.indexOf(currentThemeName);
+  const nextThemeIndex = (currentThemeIndex + 1) % themeNames.length;
+  const nextThemeName = themeNames[nextThemeIndex];
+  theme.global.name.value = nextThemeName;
+}
 </script>
 
-<style scoped>
-/* Додаткові стилі, якщо потрібно */
-</style>
+

@@ -1,1 +1,13 @@
-@import "tailwindcss";
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-y: auto !important; /* Use auto to show scrollbar only when needed */
+  }
+  
+  /* Ensure the app container takes full height if necessary */
+  #app {
+    height: 100%;
+  }
+  body {
+    font-family: 'Open Sans', sans-serif; /* 'Open Sans' - назва вашого шрифту, sans-serif - запасний варіант */
+  }
