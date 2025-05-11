@@ -64,7 +64,7 @@
 </template>
 
 <script setup>
-import { useFetch } from '@vueuse/core';
+import { useFetch, useStorage  } from '@vueuse/core';
 import AuthForm from '../components/AuthForm.vue'; 
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -80,7 +80,7 @@ const modal_text = ref({
   title: '',
   message: ''
 });
-const token = ref(null); 
+const authToken = useStorage('authToken', null);
 
 const API_URL = import.meta.env.VITE_APP_API_URL;
 
@@ -92,8 +92,8 @@ async function login() {
   await execute();
 
   if (statusCode.value === 200) { 
-    token.value = data.value.token; 
-    console.log(token.value); 
+    authToken.value = data.value.token;
+    console.log(authToken.value); 
   
     router.push('/'); 
   } else if (data.value && data.value.msg) {

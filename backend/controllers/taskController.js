@@ -23,7 +23,7 @@ exports.createTask = async (req, res) => {
         await task.save();
         res.status(201).json(task);
     } catch (err) {
-        res.status(500).json({ msg: "Помилка при створенні завдання" });
+        res.status(500).json({ msg: "Помилка при створенні завдання", 'err': err });
     }
 };
 
