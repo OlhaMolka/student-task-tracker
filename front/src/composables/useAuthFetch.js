@@ -1,42 +1,30 @@
-import { useFetch, useStorage } from "@vueuse/core";
+import { createFetch, useStorage } from "@vueuse/core";
 import { useRouter } from "vue-router";
 
+const API_URL = import.meta.env.VITE_APP_API_URL;
 const authToken = useStorage("authToken", null);
 
-export function useAuthFetch(url, options = {}) {
-  return useFetch(url, {
-    ...options,
-
+export const useAuthFetch = createFetch({
+  baseUrl: API_URL, 
+  options: {
+    
     async beforeFetch({ url, options, cancel }) {
-      const token = authToken.value;
+      const token = authToken.value; 
 
-      if (!token) {
-        console.warn(
-          `Request to ${url} cancelled: No authentication token found.`
-        );
-        cancel();
-
-        useRouter().push("/login");
-      } else {
+      if (token) {
         options.headers = {
-          ...options.headers,
+          ...options.headers, 
           Authorization: `Bearer ${token}`,
         };
       }
+
+      
       return { options };
     },
-
-    async afterFetch({ data, response }) {
-      if (response.status === 401 || response.status === 403) {
-        console.error(
-          `Authentication failed for ${response.url}. Status: ${response.status}`
-        );
-
-        const router = useRouter();
-        authToken.value = null;
-        router.push("/login");
-      }
-      return { data, response };
-    },
-  });
-}
+   
+   
+  },
+  fetchOptions: {
+    mode: 'cors',
+  },
+});

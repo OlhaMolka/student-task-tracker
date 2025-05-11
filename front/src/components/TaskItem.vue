@@ -19,14 +19,14 @@
           size="small"
           color="primary"
           class="mr-2"
-          @click="emit('edit-task', task.id)"
+          @click="emit('edit-task', task._id)"
         >
           Редагувати
         </v-btn>
         <v-btn
           size="small"
           color="error"
-          @click="emit('delete-task', task.id)"
+          @click="emit('delete-task', task._id)"
         >
           Видалити
         </v-btn>
