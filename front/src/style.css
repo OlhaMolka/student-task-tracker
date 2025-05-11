@@ -1,7 +1,7 @@
 html, body {
     margin: 0;
     padding: 0;
-    overflow-y: auto !important; /* Use auto to show scrollbar only when needed */
+    overflow-y: scroll !important; /* Use auto to show scrollbar only when needed */
   }
   
   /* Ensure the app container takes full height if necessary */
@@ -11,3 +11,14 @@ html, body {
   body {
     font-family: 'Open Sans', sans-serif; /* 'Open Sans' - назва вашого шрифту, sans-serif - запасний варіант */
   }
+@keyframes highlight {
+  0% { background-color: transparent; } /* Початковий стан - прозорий */
+  50% { background-color: #4CAF50; } /* Середина анімації - колір підсвічування */
+  100% { background-color: transparent; } /* Кінцевий стан - знову прозорий */
+}
+
+
+.highlight-blink {
+  animation-name: highlight;
+  animation: highlight 1.5s ease-in-out 3; 
+}

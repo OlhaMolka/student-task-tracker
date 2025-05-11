@@ -9,7 +9,7 @@
  
     <v-list v-if="tasks && tasks.length">
     
-      <template v-for="(task, index) in tasks" :key="task.id">
+      <template v-for="task in tasks" :key="task._id">
      
         <task-item
           :task="task"
@@ -17,7 +17,7 @@
           @delete-task="emit('delete-task', $event)" 
         ></task-item>
        
-        <v-divider v-if="index < tasks.length - 1"></v-divider>
+        <v-divider ></v-divider>
       </template>
     </v-list>
     <v-card-text v-else class="text-center text-grey">

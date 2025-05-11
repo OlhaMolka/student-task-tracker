@@ -1,6 +1,6 @@
 <template>
 
-  <v-list-item>
+  <v-list-item :data-task-id="task._id">
 
     <div class="d-flex justify-space-between align-center w-100"> 
   
