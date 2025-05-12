@@ -66,7 +66,6 @@ const { execute, error, statusCode, data } = useFetch(`${API_URL}/auth/login`, {
 async function login() {
   await execute();
   if (statusCode.value === 200) {
-    console.log(statusCode.value)
     authToken.value = data.value.token;
     currentUser.value = user.value.email;
     router.push('/');
