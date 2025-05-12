@@ -3,19 +3,20 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 exports.register = async (req, res) => {
-    const { name, email, password } = req.body;
+    const { firstName, lastName, email, password } = req.body;
     console.log(req.body);
     try {
         let user = await User.findOne({ email });
-        if (user) return res.status(400).json({ msg: 'Користувач вже існує' });
-
+        if (user) {
+            return res.status(400).json({ msg: 'Користувач з таким email вже існує' });
+        }
         const hashedPassword = await bcrypt.hash(password, 10);
-        user = new User({ name, email, password: hashedPassword });
-
+        user = new User({ firstName, lastName, email, password: hashedPassword });
         await user.save();
         res.status(201).json({ msg: 'Реєстрація успішна' });
     } catch (err) {
-        res.status(500).json({ msg: 'Помилка сервера'});
+        console.error(err.message);
+        res.status(500).json({ msg: 'Помилка сервера' });
     }
 };
 
