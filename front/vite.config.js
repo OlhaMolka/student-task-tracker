@@ -10,4 +10,29 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['vuetify'],
   },
+  build: { 
+    rollupOptions: {
+      output: {
+        manualChunks(id, { getModuleInfo }) {
+
+          if (id.includes('node_modules/vuetify')) {
+            return 'vuetify';
+          }
+         
+          if (id.includes('node_modules') && !id.includes('node_modules/vue')) { 
+            
+            const packageNameMatch = /node_modules\/([^/]+)/.exec(id);
+            if (packageNameMatch) {
+              const packageName = packageNameMatch[1];
+              
+              if (['@mdi', 'date-fns'].includes(packageName)) { 
+                 return `vendor-${packageName.replace('@', '').replace('/', '-')}`;
+              }
+                        }
+            return 'vendor'; 
+          }
+        }
+      }
+    }
+  }
 })
